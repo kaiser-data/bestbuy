@@ -27,7 +27,7 @@ class Store:
         """
         Returns the total quantity of all products in the store.
         """
-        return sum(self.product.quantity for product in self.product_list)
+        return sum(product.quantity() for product in self.product_list)
 
     def get_all_products(self):
         """
@@ -36,7 +36,14 @@ class Store:
         return [product for product in self.product_list if product.is_active]
 
     def order(self, shopping_list) -> float:
-        pass
+        total_price = 0.0
+
+        for product, quantity in shopping_list:
+            if product in self.get_all_products():
+                total_price += product.buy(quantity)  # Use the Product class's `buy` method
+            else:
+                raise ValueError(f"Product {product.name} is not available in the store.")
+        return total_price
 
 
 product_list = [Product("MacBook Air M2", price=1450, quantity=100),
