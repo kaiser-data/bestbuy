@@ -27,7 +27,7 @@ class Store:
         """
         Returns the total quantity of all products in the store.
         """
-        return sum(product.quantity() for product in self.product_list)
+        return sum(product.quantity for product in self.product_list)
 
     def get_all_products(self):
         """
@@ -35,12 +35,20 @@ class Store:
         """
         return [product for product in self.product_list if product.is_active]
 
-    def order(self, shopping_list) -> float:
+    def order(self, shopping_list: List[Tuple[Product, int]]) -> float:
+        """
+        Processes an order and returns the total price.
+        Deducts the quantities of the ordered products.
+        """
         total_price = 0.0
+        active_products = self.get_all_products()
 
         for product, quantity in shopping_list:
-            if product in self.get_all_products():
-                total_price += product.buy(quantity)  # Use the Product class's `buy` method
+            if product in active_products:
+                try:
+                    total_price += product.buy(quantity)
+                except ValueError as e:
+                    print(f"Error buying {product.name}: {e}")
             else:
                 raise ValueError(f"Product {product.name} is not available in the store.")
         return total_price
