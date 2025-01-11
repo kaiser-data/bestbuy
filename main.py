@@ -12,11 +12,16 @@ def start():
     """
     print(menu)
 
-def list_all_products(best_buy):
-
+def list_all_products() -> None:
     [product.show() for product in best_buy.get_all_products()]
 
+def total_amount() -> None:
+    print(f"Total of {best_buy.get_total_quantity()} items in store\n")
 
+def make_order() -> None:
+    shopping_list =[]
+    print("When you want to finish order, enter empty text.")
+    picked_product = input("Which product do you want? ")
 
 
 def menu_logic (user_input):
@@ -31,8 +36,10 @@ def main():
                     ]
     best_buy = Store(product_list)
 
+    user_input = input("Please choose a number: ")
+
     start()
-    list_all_products(best_buy)
+    list_all_products()
 
 
 
