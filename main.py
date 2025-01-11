@@ -1,17 +1,27 @@
-from products import Product
-from store import Store
+import products
+import store
 
-bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
-mac = Product("MacBook Air M2", price=1450, quantity=100)
+def start():
+    menu = """
+       Store Menu
+       ----------
+    1. List all products in store
+    2. Show total amount in store
+    3. Make an order
+    4. Quit
+    """
+    print(menu)
 
-print(bose.buy(50))
-print(mac.buy(100))
-print(mac.is_active())
+def main():
+    # setup initial stock of inventory
+    product_list = [products.Product("MacBook Air M2", price=1450, quantity=100),
+                    products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
+                    products.Product("Google Pixel 7", price=500, quantity=250)
+                    ]
+    best_buy = store.Store(product_list)
 
-bose.show()
-mac.show()
+    start()
 
-bose.set_quantity(1000)
-bose.show()
-
+if __name__ == '__main__':
+    main()
 
