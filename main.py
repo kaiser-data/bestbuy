@@ -1,4 +1,5 @@
 from products import Product
+from store import Store
 
 bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
 mac = Product("MacBook Air M2", price=1450, quantity=100)
@@ -12,3 +13,4 @@ mac.show()
 
 bose.set_quantity(1000)
 bose.show()
+
