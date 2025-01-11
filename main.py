@@ -1,7 +1,13 @@
+from typing import List
+
 from products import Product
 from store import Store
 
-def start():
+class StoreMenu:
+    def __init__(self, store):
+        self.store = store
+
+    def start(self):
     menu = """
        Store Menu
        ----------
@@ -12,20 +18,33 @@ def start():
     """
     print(menu)
 
-def list_all_products() -> None:
-    [product.show() for product in best_buy.get_all_products()]
+    def list_all_products(self) -> None:
+        products = best_buy.get_all_products()
+        print("------")
+        [print(f"{i+1}. {products[i].show()}") for i in range(len(products))]
+        print("------")
 
-def total_amount() -> None:
-    print(f"Total of {best_buy.get_total_quantity()} items in store\n")
+    def total_amount(self) -> None:
+        print(f"Total of {best_buy.get_total_quantity()} items in store\n")
 
-def make_order() -> None:
-    shopping_list =[]
-    print("When you want to finish order, enter empty text.")
-    picked_product = input("Which product do you want? ")
+    def make_order(self) -> List[Product]:
+
+        shopping_list =[]
+        print("When you want to finish order, enter empty text.")
+        while True:
+            picked_product = input("Which product do you want? ")
+            picked_quantity = input("What amount do you want?")
+            if picked_product == "":
+                return shopping_list
+                break
+            elif picked_product in best_buy.get_all_products():
+                shopping_list.append(picked_product, picked_quantity)
+            else:
+                print("Error adding product")
 
 
-def menu_logic (user_input):
-    pass
+    def menu_logic (user_input):
+        pass
 
 
 def main():
@@ -35,11 +54,11 @@ def main():
                     Product("Google Pixel 7", price=500, quantity=250)
                     ]
     best_buy = Store(product_list)
+    list_all_products()
 
     user_input = input("Please choose a number: ")
 
     start()
-    list_all_products()
 
 
 
