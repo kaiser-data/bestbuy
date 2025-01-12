@@ -42,7 +42,13 @@ class StoreMenu:
             # Exit condition
             if picked_product == "":
                 print("********")
-                return shopping_list
+                if shopping_list == []:
+                    break
+                else:
+
+                    print(f"Order made! Total payment: ${self.store.order(shopping_list)}")
+                    break
+
 
             # Validate if input is a digit
             if not picked_product.isdigit():
@@ -63,6 +69,9 @@ class StoreMenu:
                     print("Error: Invalid quantity. Please enter a valid number.")
             else:
                 print("Error: Invalid product number.")
+
+
+
 
     def exit_store(self):
         sys.exit()
