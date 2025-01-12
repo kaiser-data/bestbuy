@@ -48,7 +48,7 @@ class Store:
                 try:
                     total_price += product.buy(quantity)
                 except ValueError as e:
-                    print(f"Error buying {product.name}: {e}")
+                    print("Error while making order! Quantity larger than what exists")
             else:
                 raise ValueError(f"Product {product.name} is not available in the store.")
         return total_price

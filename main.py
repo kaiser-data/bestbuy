@@ -23,52 +23,40 @@ class StoreMenu:
     def list_all_products(self) -> None:
         products = self.store.get_all_products()
         print("------")
-        [print(f"{i+1}. {products[i].show()}") for i in range(len(products))]
+        for index, product in enumerate(products, start=1):
+            print(f"{index}. {product.show()}")
         print("------")
 
     def total_amount(self) -> None:
         print(f"Total of {self.store.get_total_quantity()} items in store.")
 
-    def make_order(self) -> List[Tuple[Product, int]]:
+    def make_order(self) -> None:
         self.list_all_products()
 
         shopping_list = []
         products = self.store.get_all_products()
-        print("When you want to finish order, enter empty text.")
+        print("When you want to finish the order, press Enter.")
 
-        while True:
-            picked_product = input("Enter the product number (or leave blank to finish): ").strip()
-
-            # Exit condition
-            if picked_product == "":
-                print("********")
-                if shopping_list == []:
-                    break
-                else:
-
-                    print(f"Order made! Total payment: ${self.store.order(shopping_list)}")
-                    break
-
-
-            # Validate if input is a digit
-            if not picked_product.isdigit():
+        while picked_product := input("Enter the product number (or leave blank to finish): ").strip():
+            if not picked_product.isdigit() or not (0 <= (picked_index := int(picked_product) - 1) < len(products)):
                 print("Error: Please enter a valid product number.")
                 continue
 
-            picked_product_index = int(picked_product) - 1
+            try:
+                picked_quantity = int(input("Enter the quantity: ").strip())
+                if picked_quantity > 0:
+                    shopping_list.append((products[picked_index], picked_quantity))
+                else:
+                    print("Error: Quantity must be a positive integer.")
+            except ValueError:
+                print("Error: Invalid quantity. Please enter a valid number.")
 
-            # Validate if the index is within range
-            if 0 <= picked_product_index < len(products):
-                try:
-                    picked_quantity = int(input("Enter the quantity: ").strip())
-                    if picked_quantity > 0:
-                        shopping_list.append((products[picked_product_index], picked_quantity))
-                    else:
-                        print("Error: Quantity must be a positive integer.")
-                except ValueError:
-                    print("Error: Invalid quantity. Please enter a valid number.")
-            else:
-                print("Error: Invalid product number.")
+        if shopping_list:
+            total_payment = self.store.order(shopping_list)
+            print("********")
+            print(f"Order made! Total payment: ${total_payment:.2f}")
+        else:
+            print("No items were ordered.")
 
 
 
@@ -104,7 +92,7 @@ def main():
     store_menu = StoreMenu(best_buy)
     while True:
         store_menu.print_menu()
-        user_input = input("Please choose a number: ")
+        user_input = input("Please choose a number: ").strip()
         store_menu.menu_logic(user_input)
 
 
