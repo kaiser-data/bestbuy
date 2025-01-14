@@ -1,17 +1,17 @@
 """
 This script defines the main function to run a store menu system,
-allowing users to interact with a store by a terminal input via menu
+allowing users to interact with a store by  via Storemenu class via terminal user input.
 """
 
 import sys
-from typing import List, Tuple
 
+#Loads Store Class and Product Class
 from products import Product
 from store import Store
 
 class StoreMenu:
     """
-    A class to represent the menu system interacting with store class.
+    A class to represent the menu system interacting with Store class.
 
     Attributes:
         store_obj (Store): The store instance that manages inventory and operations.
@@ -83,7 +83,7 @@ class StoreMenu:
         if shopping_list:
             total_payment = self.store_obj.order(shopping_list)
             print("********")
-            print(f"Order made! Total payment: ${total_payment:.2f}")
+            print(f"Order made! Total payment: ${total_payment:,.2f}")
         else:
             print("No items were ordered.")
 
@@ -116,7 +116,7 @@ class StoreMenu:
 
 def main() -> None:
     """
-    Sets up the store and initializes the menu for user interaction.
+    Sets up the store and initializes the store menu for user interaction.
     """
     product_list = [Product("MacBook Air M2", price=1450, quantity=100),
                     Product("Bose QuietComfort Earbuds", price=250, quantity=500),

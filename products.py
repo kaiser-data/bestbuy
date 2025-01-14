@@ -26,7 +26,7 @@ class Product:
 
         self.name = name
         self.price = float(price)
-        self.quantity = float(quantity)
+        self.quantity = int(quantity)
         self.active = True
 
     def get_quantity(self) -> float:
@@ -57,7 +57,7 @@ class Product:
         Returns:
             bool: True if the product is active, False otherwise.
         """
-        return self.quantity == True
+        return self.active == True
 
     def activate(self) -> None:
         """
@@ -78,7 +78,7 @@ class Product:
         Returns:
             str: A string containing the product's name, price, and quantity.
         """
-        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
+        return f"{self.name}, Price: ${self.price:,.2f}, Quantity: {self.quantity}"
 
     def buy(self, purchase_quantity) -> float:
         """
@@ -112,15 +112,11 @@ def test_product_class():
         Product("Google Pixel 7", price=500, quantity=250),
     ]
 
-    # Display all products
-    for product in product_list:
-        print(product.show())
-
     # Test buying a product
     print("\nBuying products:")
     for product in product_list:
         try:
-            total_price = product.buy(10)
+            total_price = product.buy(1)
             print(f"Bought 10 units of {product.name} for ${total_price:.2f}")
         except ValueError as e:
             print(f"Error while buying {product.name}: {e}")
@@ -133,6 +129,7 @@ def test_product_class():
     # Test setting quantity to 0
     print("\nSetting quantities to 0:")
     for product in product_list:
+        print(f"{product.name} active status before setting quantity to 0: {product.is_active()}")
         product.set_quantity(0)
         print(f"{product.name} active status after setting quantity to 0: {product.is_active()}")
 
