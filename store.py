@@ -1,65 +1,107 @@
 from typing import List, Tuple
-from products import Product  # Assuming Product class is defined in the `products` module
-
-
-# Store class
+from products import Product
 
 class Store:
+    """
+    A class to represent a store that manages products.
+
+    Attributes:
+        product_list (List[Product]): A list of Product objects available in the store.
+    """
+
     def __init__(self, product_list: List[Product]):
+        """
+        Initializes the Store instance with a list of products.
+
+        Args:
+            product_list (List[Product]): The initial list of products to be managed by the store.
+        """
         self.product_list = product_list
-    """
-    Initializes the Store class with a list of products.
-    """
+
 
     def add_product(self, product):
         """
-        Adds a product Class Object to the store.
+        Adds a Product object to the store.
+
+        Args:
+            product (Product): The Product object to be added.
         """
         self.product_list.append(product)
 
     def remove_product(self, product):
         """
-        Removes a product from the store.
+        Removes a Product object from the store.
+
+        Args:
+            product (Product): The Product object to be removed.
         """
         self.product_list.remove(product)
 
     def get_total_quantity(self):
         """
-        Returns the total quantity of all products in the store.
+        Calculates and returns the total quantity of all products in the store.
+
+        Returns:
+            int: The total quantity of all products.
         """
         return sum(product.quantity for product in self.product_list)
 
     def get_all_products(self):
         """
-        Returns all active products in the store.
-        """
+         Retrieves all active products in the store.
+
+         Returns:
+             List[Product]: A list of active Product objects.
+         """
         return [product for product in self.product_list if product.is_active]
 
     def order(self, shopping_list: List[Tuple[Product, int]]) -> float:
         """
-        Processes an order and returns the total price.
-        Deducts the quantities of the ordered products.
+        Processes an order and calculates the total price.
+
+        Args:
+            shopping_list (List[Tuple[Product, int]]): A list of tuples where each tuple contains
+                a Product object and the quantity to order.
+
+        Returns:
+            float: The total price of the order.
+
+        Raises:
+            ValueError: If a product is not available in the store.
         """
         total_price = 0.0
         active_products = self.get_all_products()
 
         for product, quantity in shopping_list:
             if product in active_products:
-                try:
-                    total_price += product.buy(quantity)
-                except ValueError as e:
-                    print("Error while making order! Quantity larger than what exists")
+                total_price += product.buy(quantity)
             else:
                 raise ValueError(f"Product {product.name} is not available in the store.")
+
         return total_price
 
 
-product_list = [Product("MacBook Air M2", price=1450, quantity=100),
-                Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-                Product("Google Pixel 7", price=500, quantity=250),
-               ]
+def testing_store_class():
+    """
+    Function to test the Store class functionality.
+    """
+    product_list = [
+        Product("MacBook Air M2", price=1450, quantity=100),
+        Product("Bose QuietComfort Earbuds", price=250, quantity=500),
+        Product("Google Pixel 7", price=500, quantity=250),
+    ]
 
-store = Store(product_list)
-products = store.get_all_products()
-print(store.get_total_quantity())
-print(store.order([(products[0], 1), (products[1], 2)]))
+    store = Store(product_list)
+    print("Initial total quantity:", store.get_total_quantity())
+
+    # Retrieve all active products
+    products = store.get_all_products()
+
+    # Place an order
+    total_cost = store.order([(products[0], 1), (products[1], 2)])
+    print("Total cost of order:", total_cost)
+
+
+if __name__ == "__main__":
+    testing_store_class()
+
