@@ -1,3 +1,8 @@
+"""
+This script defines the main function to run a store menu system,
+allowing users to interact with a store by a terminal input via menu
+"""
+
 import sys
 from typing import List, Tuple
 
@@ -5,11 +10,25 @@ from products import Product
 from store import Store
 
 class StoreMenu:
+    """
+    A class to represent the menu system interacting with store class.
 
-    def __init__(self, store):
-        self.store = store
+    Attributes:
+        store_obj (Store): The store instance that manages inventory and operations.
+    """
+    def __init__(self, store_obj: Store) -> None:
+        """
+        Initializes the StoreMenu with a given Store instance.
 
-    def print_menu(self):
+        Args:
+            store_obj (Store): The store instance.
+        """
+        self.store_obj = store_obj
+
+    def print_menu(self) -> None:
+        """
+        Displays the store menu options to the user.
+        """
         menu = """
            Store Menu
            ----------
@@ -21,20 +40,30 @@ class StoreMenu:
         print(menu)
 
     def list_all_products(self) -> None:
-        products = self.store.get_all_products()
+        """
+        Lists all available products in the store along with their details.
+        """
+        products = self.store_obj.get_all_products()
         print("------")
         for index, product in enumerate(products, start=1):
             print(f"{index}. {product.show()}")
         print("------")
 
     def total_amount(self) -> None:
-        print(f"Total of {self.store.get_total_quantity()} items in store.")
+        """
+        Displays the total quantity of all products in the store.
+        """
+        print(f"Total of {self.store_obj.get_total_quantity()} items in store.")
 
     def make_order(self) -> None:
+        """
+        Allows the user to create an order by selecting products and quantities.
+        Handles input validation and processes the order through the store.
+        """
         self.list_all_products()
 
         shopping_list = []
-        products = self.store.get_all_products()
+        products = self.store_obj.get_all_products()
         print("When you want to finish the order, press Enter.")
 
         while picked_product := input("Enter the product number (or leave blank to finish): ").strip():
@@ -52,22 +81,25 @@ class StoreMenu:
                 print("Error: Invalid quantity. Please enter a valid number.")
 
         if shopping_list:
-            total_payment = self.store.order(shopping_list)
+            total_payment = self.store_obj.order(shopping_list)
             print("********")
             print(f"Order made! Total payment: ${total_payment:.2f}")
         else:
             print("No items were ordered.")
 
-
-
-
-    def exit_store(self):
+    def exit_store(self) -> None:
+        """
+        Exits the store menu system.
+        """
         sys.exit()
 
+    def menu_logic(self, user_input: str) -> None:
+        """
+        Executes the appropriate action based on user input.
 
-    def menu_logic(self, user_input):
-
-        #define user options
+        Args:
+            user_input (str): The menu option selected by the user.
+        """
         menu_options = {
             "1": lambda: self.list_all_products(),
             "2": lambda: self.total_amount(),
@@ -82,8 +114,10 @@ class StoreMenu:
             print("Invalid option. Please try again.")
 
 
-def main():
-    # setup initial stock of inventory
+def main() -> None:
+    """
+    Sets up the store and initializes the menu for user interaction.
+    """
     product_list = [Product("MacBook Air M2", price=1450, quantity=100),
                     Product("Bose QuietComfort Earbuds", price=250, quantity=500),
                     Product("Google Pixel 7", price=500, quantity=250)

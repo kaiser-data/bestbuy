@@ -1,3 +1,7 @@
+"""
+This module defines the functionality of the store class using product class to manage products for the main.py
+"""
+
 from typing import List, Tuple
 from products import Product
 
@@ -44,7 +48,7 @@ class Store:
         Returns:
             int: The total quantity of all products.
         """
-        return sum(product.quantity for product in self.product_list)
+        return int(sum(product.quantity for product in self.product_list))
 
     def get_all_products(self):
         """
