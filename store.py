@@ -85,27 +85,4 @@ class Store:
         return total_price
 
 
-def testing_store_class():
-    """
-    Function to test the Store class functionality.
-    """
-    product_list = [
-        Product("MacBook Air M2", price=1450, quantity=100),
-        Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-        Product("Google Pixel 7", price=500, quantity=250),
-    ]
-
-    store = Store(product_list)
-    print("Initial total quantity:", store.get_total_quantity())
-
-    # Retrieve all active products
-    products = store.get_all_products()
-
-    # Place an order
-    total_cost = store.order([(products[0], 1), (products[1], 2)])
-    print("Total cost of order:", total_cost)
-
-
-if __name__ == "__main__":
-    testing_store_class()
 

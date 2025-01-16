@@ -101,37 +101,3 @@ class Product:
         else:
             raise ValueError('Not enough quantity in stock')
 
-def test_product_class():
-    """
-    A function to test the Product class.
-    """
-    # Create a list of products
-    product_list = [
-        Product("MacBook Air M2", price=1450, quantity=100),
-        Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-        Product("Google Pixel 7", price=500, quantity=250),
-    ]
-
-    # Test buying a product
-    print("\nBuying products:")
-    for product in product_list:
-        try:
-            total_price = product.buy(1)
-            print(f"Bought 10 units of {product.name} for ${total_price:.2f}")
-        except ValueError as e:
-            print(f"Error while buying {product.name}: {e}")
-
-    # Display updated quantities
-    print("\nUpdated product details:")
-    for product in product_list:
-        print(product.show())
-
-    # Test setting quantity to 0
-    print("\nSetting quantities to 0:")
-    for product in product_list:
-        print(f"{product.name} active status before setting quantity to 0: {product.is_active()}")
-        product.set_quantity(0)
-        print(f"{product.name} active status after setting quantity to 0: {product.is_active()}")
-
-if __name__ == "__main__":
-    test_product_class()
