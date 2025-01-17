@@ -9,7 +9,7 @@ class Product:
         name (str): The name of the product.
         price (float): The price of the product. Must be non-negative.
         quantity (int): The quantity of the product in stock. Must be non-negative.
-        active (bool): Whether the product is active or not. Defaults to True.
+        active (bool): Whether the product is active or not. Defaults to True if quantity >0. and for 0 False
     """
     def __init__(self, name: str, price: float, quantity: int) -> None:
         """
