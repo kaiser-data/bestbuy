@@ -1,9 +1,9 @@
 """
-This module defines the functionality of the store class using product class to manage products for the main.py
+This module defines the functionality of the store class using Product class to manage products for the main.py
 """
-
 from typing import List, Tuple
 from products import Product
+
 
 class Store:
     """
@@ -13,7 +13,7 @@ class Store:
         product_list (List[Product]): A list of Product objects available in the store.
     """
 
-    def __init__(self, product_list: List[Product]):
+    def __init__(self, product_list: List[Product]) -> None:
         """
         Initializes the Store instance with a list of products.
 
@@ -21,7 +21,6 @@ class Store:
             product_list (List[Product]): The initial list of products to be managed by the store.
         """
         self.product_list = product_list
-
 
     def add_product(self, product):
         """

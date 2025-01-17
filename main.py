@@ -1,13 +1,12 @@
 """
 This script defines the main function to run a store menu system,
-allowing users to interact with a store by  via Storemenu class via terminal user input.
+allowing users to interact with a store by via StoreMenu class via terminal user input.
 """
-
 import sys
-
 #Loads Store Class and Product Class
 from products import Product
 from store import Store
+
 
 class StoreMenu:
     """
@@ -43,8 +42,10 @@ class StoreMenu:
         """
         Lists all available products in the store along with their details.
         """
+        # Retrieve the list of products from the store
         products = self.store_obj.get_all_products()
         print("------")
+        # Iterate through products and display them with an index
         for index, product in enumerate(products, start=1):
             print(f"{index}. {product.show()}")
         print("------")
@@ -60,26 +61,30 @@ class StoreMenu:
         Allows the user to create an order by selecting products and quantities.
         Handles input validation and processes the order through the store.
         """
+        # Display all available products
         self.list_all_products()
 
         shopping_list = []
         products = self.store_obj.get_all_products()
-        print("When you want to finish the order, press Enter.")
+        print("When you want to finish the order, press Enter with empty text.")
 
-        while picked_product := input("Enter the product number (or leave blank to finish): ").strip():
+        # Continuously prompt the user for product selection
+        while picked_product := input("Which product # do you want? ").strip():
+            # Validate input for product selection
             if not picked_product.isdigit() or not (0 <= (picked_index := int(picked_product) - 1) < len(products)):
                 print("Error: Please enter a valid product number.")
                 continue
-
+            # Prompt for quantity and validate it
             try:
-                picked_quantity = int(input("Enter the quantity: ").strip())
+                picked_quantity = int(input("What amount do you want? ").strip())
                 if picked_quantity > 0:
                     shopping_list.append((products[picked_index], picked_quantity))
                 else:
-                    print("Error: Quantity must be a positive integer.")
+                    print("Error: Amount must be a positive integer.")
             except ValueError:
-                print("Error: Invalid quantity. Please enter a valid number.")
+                print("Error: Invalid Amount. Please enter a valid number.")
 
+        # Process the order if items were added to the shopping list
         if shopping_list:
             total_payment = self.store_obj.order(shopping_list)
             print("********")
@@ -100,6 +105,7 @@ class StoreMenu:
         Args:
             user_input (str): The menu option selected by the user.
         """
+        # Define the mapping of menu options to functions
         menu_options = {
             "1": lambda: self.list_all_products(),
             "2": lambda: self.total_amount(),
@@ -118,12 +124,17 @@ def main() -> None:
     """
     Sets up the store and initializes the store menu for user interaction.
     """
+    # Initialize a list of sample products
     product_list = [Product("MacBook Air M2", price=1450, quantity=100),
                     Product("Bose QuietComfort Earbuds", price=250, quantity=500),
                     Product("Google Pixel 7", price=500, quantity=250)
                     ]
+    # Create a Store instance with the product list
     best_buy = Store(product_list)
+    # Initialize the StoreMenu with the Store instance
     store_menu = StoreMenu(best_buy)
+
+    # Display the menu and handle user input in a loop
     while True:
         store_menu.print_menu()
         user_input = input("Please choose a number: ").strip()

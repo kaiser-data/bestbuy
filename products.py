@@ -1,3 +1,6 @@
+"""
+This module defines the functionality of the Product class for the Store class in store.py
+"""
 class Product:
     """
     A class to represent a product with attributes for name, price, quantity, and active status.
@@ -8,8 +11,7 @@ class Product:
         quantity (int): The quantity of the product in stock. Must be non-negative.
         active (bool): Whether the product is active or not. Defaults to True.
     """
-
-    def __init__(self, name: str, price: float, quantity: int):
+    def __init__(self, name: str, price: float, quantity: int) -> None:
         """
         Initialize a new product with the given name, price, and quantity.
 
@@ -100,4 +102,3 @@ class Product:
             return self.price * purchase_quantity
         else:
             raise ValueError('Not enough quantity in stock')
-
