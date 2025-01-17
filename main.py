@@ -127,12 +127,22 @@ def main() -> None:
     """
     Sets up the store and initializes the store menu for user interaction.
     """
-    # Initialize a list of sample products
-    product_list = [Product("MacBook Air M2", price=1450, quantity=100),
-                    Product("MacBook Air M3", price=2450, quantity=0),
-                    Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-                    Product("Google Pixel 7", price=500, quantity=250)
-                    ]
+    # Raw product data
+    raw_product_list = [
+        {"name": "MacBook Air M2", "price": 1450, "quantity": 100},
+        {"name": "MacBook Air M3", "price": -2450, "quantity": 0},  # Invalid: Negative price
+        {"name": "Bose QuietComfort Earbuds", "price": 250, "quantity": 500},
+        {"name": "Google Pixel 7", "price": 500, "quantity": 250}
+    ]
+
+    # validating valid try-except handling
+    product_list = []
+    for data in raw_product_list:
+        try:
+            product_list.append(Product(**data))
+        except ValueError as e:
+            print(f"\nSkipping invalid product: {data} -> {e}")
+
     # Create a Store instance with the product list
     best_buy = Store(product_list)
     # Initialize the StoreMenu with the Store instance

@@ -20,7 +20,13 @@ class Store:
         Args:
             product_list (List[Product]): The initial list of products to be managed by the store.
         """
-        self.product_list = product_list
+        self.product_list = []
+        for product in product_list:
+            try:
+                # Append product if it's valid; invalid products will raise ValueError
+                self.product_list.append(product)
+            except ValueError as e:
+                print(f"Skipping invalid product: {e}")
 
     def add_product(self, product):
         """
