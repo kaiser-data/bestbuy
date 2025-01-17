@@ -56,7 +56,7 @@ class Store:
          Returns:
              List[Product]: A list of active Product objects.
          """
-        return [product for product in self.product_list if product.is_active]
+        return [product for product in self.product_list if product.is_active()]
 
     def order(self, shopping_list: List[Tuple[Product, int]]) -> float:
         """

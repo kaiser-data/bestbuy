@@ -86,11 +86,14 @@ class StoreMenu:
 
         # Process the order if items were added to the shopping list
         if shopping_list:
-            total_payment = self.store_obj.order(shopping_list)
-            print("********")
-            print(f"Order made! Total payment: ${total_payment:,.2f}")
-        else:
-            print("No items were ordered.")
+            try:
+                total_payment = self.store_obj.order(shopping_list)
+                print("********")
+                print(f"Order made! Total payment: ${total_payment:,.2f}")
+            except ValueError as e:
+                print(f"Order processing error: {e}")
+            else:
+                print("No items were ordered.")
 
     def exit_store(self) -> None:
         """
@@ -126,6 +129,7 @@ def main() -> None:
     """
     # Initialize a list of sample products
     product_list = [Product("MacBook Air M2", price=1450, quantity=100),
+                    Product("MacBook Air M3", price=2450, quantity=0),
                     Product("Bose QuietComfort Earbuds", price=250, quantity=500),
                     Product("Google Pixel 7", price=500, quantity=250)
                     ]

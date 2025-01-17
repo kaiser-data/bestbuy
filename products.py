@@ -29,7 +29,10 @@ class Product:
         self.name = name
         self.price = float(price)
         self.quantity = int(quantity)
-        self.active = True
+        if self.quantity > 0:
+            self.active = True
+        else:
+            self.active = False
 
     def get_quantity(self) -> float:
         """
@@ -50,6 +53,10 @@ class Product:
         self.quantity = quantity
         if self.quantity == 0:
             self.deactivate()
+        elif self.quantity > 0:
+            self.activate()
+        else:
+            raise ValueError('Quantity cannot be negative')
 
 
     def is_active(self) -> bool:
@@ -84,7 +91,7 @@ class Product:
 
     def buy(self, purchase_quantity) -> float:
         """
-        Buy a specified quantity of the product.
+        Buy a specified quantity of the product. And deactivates it if the quantity becomes zero.
 
         Args:
             purchase_quantity (int): The quantity to purchase. Must be greater than zero.
@@ -98,7 +105,7 @@ class Product:
         if purchase_quantity <= 0:
             raise ValueError('Quantity to buy must be greater than zero')
         if self.quantity >= purchase_quantity:
-            self.quantity -= purchase_quantity
+            self.set_quantity(self.quantity - purchase_quantity)
             return self.price * purchase_quantity
         else:
             raise ValueError('Not enough quantity in stock')
